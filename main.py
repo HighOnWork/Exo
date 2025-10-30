@@ -17,7 +17,7 @@ while True:
     except tk.TclError:
         break
 
-label = tk.Label(pomodoro_window, bg="black")
+label = tk.Label(master=pomodoro_window, bg="black")
 label.place(x=0, y=0)
 
 timer_for_work = tk.Label(master=pomodoro_window, text="Starting!")
