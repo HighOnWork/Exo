@@ -17,6 +17,9 @@ while True:
 label = tk.Label(pomodoro_window, bg="black")
 label.place(x=0, y=0)
 
+timer_for_work = tk.Label(master=pomodoro_window, text="Starting!")
+timer_for_work.pack()
+
 def update(ind=0):
     frame = timer_running_frames[ind]
     label.configure(image=frame)
