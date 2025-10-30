@@ -39,9 +39,12 @@ def window_setup():
 
 def countdown():
     global STUDY_TIME
-    STUDY_TIME -=1
-    print(STUDY_TIME)
-    time.sleep(1)
+    if STUDY_TIME > 0:
+        STUDY_TIME -= 1
+        timer_for_work.config(text=STUDY_TIME)
+        pomodoro_window.after(1000, countdown)
+    else:
+        timer_for_work.config(text="Done!")
 
 
 def main():
