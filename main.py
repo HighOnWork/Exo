@@ -1,7 +1,7 @@
 import tkinter as tk
 
 CAT_RUNNING = "cat_running.gif"
-STUDY_TIME = 1500
+STUDY_TIME = 15
 
 pomodoro_window = tk.Tk()
 
@@ -46,7 +46,7 @@ def countdown():
         timer_for_work.config(text=new_study_time)
         pomodoro_window.after(1000, countdown)
     else:
-        timer_for_work.config(text="Done!")
+        print("DONE")
 
 def main():
     window_setup()
