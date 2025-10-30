@@ -40,6 +40,8 @@ def countdown():
 def main():
     window_setup()
     update()
+    countdown()
+    #DONT ADD ANYTHING BELOW THIS FUNCTION
     pomodoro_window.mainloop()
 
 if __name__ == "__main__":
