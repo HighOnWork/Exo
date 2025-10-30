@@ -3,6 +3,7 @@ import time
 from doctest import master
 
 CAT_RUNNING = "cat_running.gif"
+STUDY_TIME = 25
 
 pomodoro_window = tk.Tk()
 
