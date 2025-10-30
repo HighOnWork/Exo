@@ -40,6 +40,7 @@ def countdown():
     print(STUDY_TIME)
     time.sleep(1)
 
+
 def main():
     window_setup()
     update()
