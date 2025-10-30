@@ -1,13 +1,12 @@
 import tkinter as tk
-import time
-from doctest import master
 
 CAT_RUNNING = "cat_running.gif"
-STUDY_TIME = 25
+STUDY_TIME = 1500
 
 pomodoro_window = tk.Tk()
 
 timer_running_frames = []
+
 i = 0
 while True:
     try:
@@ -41,11 +40,13 @@ def countdown():
     global STUDY_TIME
     if STUDY_TIME > 0:
         STUDY_TIME -= 1
-        timer_for_work.config(text=STUDY_TIME)
+        minutes = STUDY_TIME // 60
+        seconds = STUDY_TIME % 60
+        new_study_time = f"{minutes}:{seconds}"
+        timer_for_work.config(text=new_study_time)
         pomodoro_window.after(1000, countdown)
     else:
         timer_for_work.config(text="Done!")
-
 
 def main():
     window_setup()
