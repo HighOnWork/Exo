@@ -31,6 +31,12 @@ def window_setup():
     pomodoro_window.config(bg="black")
     pomodoro_window.geometry(f"{w}x{h}")
 
+def countdown():
+    global STUDY_TIME
+    STUDY_TIME -=1
+    print(STUDY_TIME)
+    time.sleep(1)
+
 def main():
     window_setup()
     update()
