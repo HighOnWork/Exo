@@ -1,4 +1,6 @@
 import tkinter as tk
+import time
+from doctest import master
 
 CAT_RUNNING = "cat_running.gif"
 
