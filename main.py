@@ -1,5 +1,6 @@
 import tkinter as tk
 
+RESET = False
 CAT_RUNNING = "cat_running.gif"
 CAT_STOPPED = "cat_resting.gif"
 STUDY_TIME = 15
@@ -21,7 +22,7 @@ timer_stopped_frames = []
 x = 0
 while True:
     try:
-        other_frame = tk.PhotoImage(file=CAT_STOPPED, format=f"gif -index{x}")
+        other_frame = tk.PhotoImage(file=CAT_STOPPED, format=f"gif -index {x}")
         timer_stopped_frames.append(other_frame)
         x += 1
     except tk.TclError:
@@ -42,18 +43,25 @@ text_item = canvas.create_text(
 )
 
 def running_update(ind=0):
+    global RESET
     global Flag
+    if RESET:
+        ind = 0
+        RESET = False
     if Flag:
         frame = timer_running_frames[ind]
+        ind = (ind + 1) % len(timer_running_frames)
     elif not Flag:
         frame = timer_stopped_frames[ind]
+        ind = (ind + 1) % len(timer_stopped_frames)
+
     canvas.itemconfig(image_item, image=frame)
-    ind = (ind + 1) % len(timer_running_frames)
     pomodoro_window.after(100, running_update, ind)
 
 
 
 def countdown():
+    global RESET
     global Flag
     global STUDY_TIME
 
@@ -63,14 +71,10 @@ def countdown():
     new_study_time = f"{minutes}:{seconds}"
     canvas.itemconfig(text_item, text=new_study_time)
     if STUDY_TIME <= 0:
-        if Flag:
-            Flag = False
-        elif not Flag:
-            Flag = True
-        if Flag:
-            STUDY_TIME = 15
-        elif not Flag:
-            STUDY_TIME = 5
+        RESET = True
+        Flag = not Flag
+        STUDY_TIME = 15 if Flag else 5
+
     pomodoro_window.after(1000, countdown)
 def window_setup():
     pomodoro_window.title("Pomodoro Timer")
