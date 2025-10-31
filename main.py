@@ -3,6 +3,7 @@ from PIL import Image, ImageTk, ImageSequence
 import io
 
 RESET = False
+count = 0
 CAT_RUNNING = "cat_running.gif"
 CAT_STOPPED = "cat_resting.gif"
 STUDY_TIME = 15
@@ -97,6 +98,7 @@ def running_update(ind=0):
 
 
 def countdown():
+    global count
     global RESET
     global Flag
     global STUDY_TIME
@@ -110,14 +112,17 @@ def countdown():
     canvas.itemconfig(text_item, text=new_study_time)
 
     if STUDY_TIME <= 0:
+
         RESET = True
         Flag = not Flag
-        if Flag:
-
+        if count % 4 == 0:
+            STUDY_TIME = 10
+            print("Long break")
+        elif Flag:
+            count += 1
             STUDY_TIME = 15
             print("Time for a study session!")
         else:
-
             STUDY_TIME = 5
             print("Time for a break!")
 
