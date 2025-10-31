@@ -1,6 +1,7 @@
 import tkinter as tk
 
 CAT_RUNNING = "cat_running.gif"
+CAT_STOPPED = "cat_resting.gif"
 STUDY_TIME = 15
 
 pomodoro_window = tk.Tk()
@@ -13,6 +14,16 @@ while True:
         frame = tk.PhotoImage(file=CAT_RUNNING, format=f"gif -index {i}")
         timer_running_frames.append(frame)
         i += 1
+    except tk.TclError:
+        break
+
+timer_stopped_frames = []
+x = 0
+while True:
+    try:
+        other_frame = tk.PhotoImage(file=CAT_STOPPED, format=f"gif -index{x}")
+        timer_stopped_frames.append(other_frame)
+        x += 1
     except tk.TclError:
         break
 
@@ -30,11 +41,17 @@ text_item = canvas.create_text(
     fill="white"
 )
 
-def update(ind=0):
-    frame = timer_running_frames[ind]
+def running_update(ind=0):
+    global Flag
+    if Flag:
+        frame = timer_running_frames[ind]
+    elif not Flag:
+        frame = timer_stopped_frames[ind]
     canvas.itemconfig(image_item, image=frame)
     ind = (ind + 1) % len(timer_running_frames)
-    pomodoro_window.after(100, update, ind)
+    pomodoro_window.after(100, running_update, ind)
+
+
 
 def countdown():
     global Flag
@@ -62,7 +79,7 @@ def window_setup():
 
 def main():
     window_setup()
-    update()
+    running_update()
     countdown()
     pomodoro_window.mainloop()
 
