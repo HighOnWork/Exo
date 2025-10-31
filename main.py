@@ -45,7 +45,9 @@ def countdown():
         canvas.itemconfig(text_item, text=new_study_time)
         pomodoro_window.after(1000, countdown)
     else:
-        canvas.itemconfig(text_item, text="DONE!")
+        print("Break time")
+        STUDY_TIME = 10
+        pomodoro_window.after(1000, countdown)
 
 def window_setup():
     pomodoro_window.title("Pomodoro Timer")
