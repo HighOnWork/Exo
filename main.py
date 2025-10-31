@@ -4,6 +4,7 @@ CAT_RUNNING = "cat_running.gif"
 STUDY_TIME = 15
 
 pomodoro_window = tk.Tk()
+Flag = True
 
 timer_running_frames = []
 i = 0
@@ -36,19 +37,24 @@ def update(ind=0):
     pomodoro_window.after(100, update, ind)
 
 def countdown():
+    global Flag
     global STUDY_TIME
-    if STUDY_TIME > 0:
-        STUDY_TIME -= 1
-        minutes = STUDY_TIME // 60
-        seconds = STUDY_TIME % 60
-        new_study_time = f"{minutes}:{seconds}"
-        canvas.itemconfig(text_item, text=new_study_time)
-        pomodoro_window.after(1000, countdown)
-    else:
-        print("Break time")
-        STUDY_TIME = 10
-        pomodoro_window.after(1000, countdown)
 
+    STUDY_TIME -= 1
+    minutes = STUDY_TIME // 60
+    seconds = STUDY_TIME % 60
+    new_study_time = f"{minutes}:{seconds}"
+    canvas.itemconfig(text_item, text=new_study_time)
+    if STUDY_TIME <= 0:
+        if Flag:
+            Flag = False
+        elif not Flag:
+            Flag = True
+        if Flag:
+            STUDY_TIME = 15
+        elif not Flag:
+            STUDY_TIME = 5
+    pomodoro_window.after(1000, countdown)
 def window_setup():
     pomodoro_window.title("Pomodoro Timer")
     pomodoro_window.config(bg="black")
