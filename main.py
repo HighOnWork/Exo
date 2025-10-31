@@ -30,7 +30,7 @@ while True:
 
 gif = timer_running_frames[0]
 w, h = gif.width(), gif.height()
-canvas = tk.Canvas(pomodoro_window, width=w, height=h, highlightthickness=0, bg="black")
+canvas = tk.Canvas(pomodoro_window, width=w, height=h, highlightthickness=0)
 canvas.pack()
 
 # Place the first frame and the text
