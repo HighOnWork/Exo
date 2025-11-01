@@ -6,6 +6,7 @@ RESET = False
 count = 0
 CAT_RUNNING = "cat_running.gif"
 CAT_STOPPED = "cat_resting.gif"
+CAT_LONG_BREAK = "cat_long_break.gif"
 STUDY_TIME = 15
 
 pomodoro_window = tk.Tk()
@@ -48,6 +49,8 @@ print(f"Loading {CAT_RUNNING}...")
 timer_running_frames = load_gif_frames(CAT_RUNNING)
 print(f"Loading {CAT_STOPPED}...")
 timer_stopped_frames = load_gif_frames(CAT_STOPPED)
+print(f"Loading {CAT_LONG_BREAK}")
+timer_longStop_frames = load_gif_frames(CAT_LONG_BREAK)
 # --- End of Update ---
 
 if not timer_running_frames or not timer_stopped_frames:
@@ -57,6 +60,8 @@ if not timer_running_frames or not timer_stopped_frames:
         timer_running_frames = load_gif_frames("nonexistent_placeholder_1.gif")
     if not timer_stopped_frames:
         timer_stopped_frames = load_gif_frames("nonexistent_placeholder_2.gif")
+    if not timer_longStop_frames:
+        timer_longStop_frames = load_gif_frames("nonexistent_placeholder_3.gif")
 
 if timer_running_frames:
     gif = timer_running_frames[0]
@@ -73,7 +78,7 @@ text_item = canvas.create_text(
     w // 2, h // 2 - 50,
     text="Starting!",
     font=("Arial", 20, "bold"),
-    fill="white"
+    fill="black"
 )
 
 
@@ -81,7 +86,12 @@ def running_update(ind=0):
     global RESET
     global Flag
 
-    current_frames = timer_running_frames if Flag else timer_stopped_frames
+    if Flag:
+        current_frames = timer_running_frames
+    elif count % 4 == 0:
+        current_frames = timer_longStop_frames
+    else:
+        current_frames = timer_stopped_frames
 
     if not current_frames:
         return
@@ -115,16 +125,18 @@ def countdown():
 
         RESET = True
         Flag = not Flag
-        if count % 4 == 0:
-            STUDY_TIME = 10
-            print("Long break")
-        elif Flag:
-            count += 1
+
+        if Flag:
+
             STUDY_TIME = 15
             print("Time for a study session!")
         else:
-            STUDY_TIME = 5
-            print("Time for a break!")
+            count += 1
+            if count % 4 == 0:
+                STUDY_TIME = 10
+            else:
+                STUDY_TIME = 5
+                print("Time for a break!")
 
     pomodoro_window.after(1000, countdown)
 
@@ -132,7 +144,8 @@ def countdown():
 def window_setup():
     pomodoro_window.title("Pomodoro Timer")
     pomodoro_window.config(bg="black")
-
+    pomodoro_window.attributes('-topmost', True)
+    pomodoro_window.resizable(False, False)
     pomodoro_window.geometry(f"{w}x{h}")
 
 
