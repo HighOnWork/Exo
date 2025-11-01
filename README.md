@@ -1,1 +1,1 @@
-A nice looking pomodoro timer created in Python using tkinter
+A nice looking simple pomodoro timer created in Python using tkinter
