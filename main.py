@@ -7,7 +7,7 @@ count = 0
 CAT_RUNNING = "cat_running.gif"
 CAT_STOPPED = "cat_resting.gif"
 CAT_LONG_BREAK = "cat_long_break.gif"
-STUDY_TIME = 15
+STUDY_TIME = 1500
 
 pomodoro_window = tk.Tk()
 Flag = True
@@ -117,7 +117,7 @@ def countdown():
     minutes = STUDY_TIME // 60
     seconds = STUDY_TIME % 60
     # Format seconds to always have two digits (e.g., 1:05)
-    new_study_time = f"{minutes}:{seconds:02d}"
+    new_study_time = f"{minutes:02d}:{seconds:02d}"
 
     canvas.itemconfig(text_item, text=new_study_time)
 
@@ -128,14 +128,14 @@ def countdown():
 
         if Flag:
 
-            STUDY_TIME = 15
+            STUDY_TIME = 1500
             print("Time for a study session!")
         else:
             count += 1
             if count % 4 == 0:
-                STUDY_TIME = 10
+                STUDY_TIME = 600
             else:
-                STUDY_TIME = 5
+                STUDY_TIME = 300
                 print("Time for a break!")
 
     pomodoro_window.after(1000, countdown)
